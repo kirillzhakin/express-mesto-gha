@@ -41,14 +41,13 @@ const createUser = (req, res) => {
 };
 
 const updateUserProfile = (req, res) => {
-  const { name, about } = req.body;
-  console.log({ name, about });
-  User.findByIdAndUpdate(req.user._id, { name, about })
+  const { name, about, avatar } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, about, avatar })
     .then((user) => {
       if (!user) {
         return res.status(404).send({ message: 'Запрашиваемый пользователь не найден' });
       }
-      res.send(user);
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -65,7 +64,7 @@ const updateAvatarProfile = (req, res) => {
       if (!user) {
         return res.status(404).send({ message: 'Запрашиваемый пользователь не найден' });
       }
-      res.send(user);
+      res.status(200).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
