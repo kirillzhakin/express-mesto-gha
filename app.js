@@ -18,7 +18,7 @@ mongoose.connect('mongodb://0.0.0.0:27017/mestodb')
 
 app.use((req, _res, next) => {
   req.user = {
-    _id: '62a22ba5c5bf533db9312f43', // _id созданного пользователя
+    _id: '62a4cc05d6a5293165ac26cf', // _id созданного пользователя
   };
 
   next();
@@ -27,7 +27,7 @@ app.use((req, _res, next) => {
 app.use('/', userRouter);
 app.use('/', cardRouter);
 
-app.get('*', (_req, res) => {
+app.use('*', (_req, res) => {
   res.status(404).send({ message: 'Страница не найдена' });
 });
 

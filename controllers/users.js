@@ -6,11 +6,10 @@
 const User = require('../models/user');
 
 const usersController = (_req, res) => {
-  const error = new Error('Данные не найдены');
   User.find()
     .then((data) => {
       if (!data) {
-        throw error;
+        throw new Error();
       }
       res.send(data);
     })
@@ -19,18 +18,17 @@ const usersController = (_req, res) => {
 
 const userController = (req, res) => {
   const { userId } = req.params;
-  User.findOne({ id: userId })
-    .then((data) => {
-      if (!data) {
-        return res.status(404).send({ message: 'Запрашиваемый пользователь не найден' });
+  User.findById(userId)
+    .then((user) => {
+      if (!user) {
+        throw new Error();
       }
-      res.send(data);
+      res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' });
+      if (err) {
+        return res.status(404).send({ message: 'Запрашиваемый пользователь не найден' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
     });
 };
 
@@ -44,18 +42,8 @@ const createUser = (req, res) => {
 const updateUserProfile = (req, res) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({ message: 'Запрашиваемый пользователь не найден' });
-      }
-      res.send({ data: user });
-    })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' });
-      }
-      return res.status(500).send({ message: 'Произошла ошибка' });
-    });
+    .then((user) => res.send(user))
+    .catch((_) => res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' }));
 };
 
 const updateAvatarProfile = (req, res) => {
