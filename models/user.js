@@ -20,8 +20,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        const urlRegex = /^(http:\/\/|https:\/\/w*\w)/;
-        return urlRegex.test(v);
+        const url = /^(http:\/\/|https:\/\/w*\w)/;
+        return url.test(v);
       },
       message: 'Некорректный адрес ссылки',
     },
