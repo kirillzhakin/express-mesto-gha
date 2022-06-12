@@ -36,12 +36,7 @@ const userController = (req, res) => {
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({ message: 'Запрашиваемый пользователь не найден' });
-      }
-      res.status(200).send(user);
-    })
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' });

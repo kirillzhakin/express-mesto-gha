@@ -4,27 +4,15 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minlength: 2,
-    maxlength: 30,
-    validate: {
-      validator(v) {
-        return v < 2 || v > 30;
-      },
-      message: 'Введите информацию о пользователе длинной от 2-х до 30-ти символов',
-    },
+    minlength: [2, 'Длина имени пользователя меньше 2-х символов'],
+    maxlength: [30, 'Длина имени пользователя более 30-и символов'],
   },
 
   about: {
     type: String,
     required: true,
-    minlength: 2,
-    maxlength: 30,
-    validate: {
-      validator(v) {
-        return v < 2 || v > 30;
-      },
-      message: 'Введите информацию о пользователе длинной от 2-х до 30-ти символов',
-    },
+    minlength: [2, 'Длина информации о пользователе меньше 2-х символов'],
+    maxlength: [30, 'Длина информации о пользователе более 30-и символов'],
   },
 
   avatar: {
@@ -32,7 +20,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        const urlRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
+        const urlRegex = /^(http:\/\/|https:\/\/w*\w)/;
         return urlRegex.test(v);
       },
       message: 'Некорректный адрес ссылки',
