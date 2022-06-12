@@ -9,7 +9,7 @@ const cardsController = (_req, res) => {
   Card.find()
     .then((data) => res.send(data))
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
@@ -22,7 +22,7 @@ const createCard = (req, res) => {
   Card.create({ name, link, owner: _id })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
@@ -39,7 +39,7 @@ const deleteCard = (req, res) => {
       return res.send({ data: card });
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
@@ -58,7 +58,7 @@ const likeCard = (req, res) => {
     return res.send({ data: like });
   })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
@@ -77,7 +77,7 @@ const dislikeCard = (req, res) => {
     return res.send({ data: like });
   })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });

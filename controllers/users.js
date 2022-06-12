@@ -36,8 +36,8 @@ const userController = (req, res) => {
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
-    .then((user) => res.status(200).send(user))
-    .catch((_) => res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' }));
+    .then((user) => res.send(user))
+    .catch((_) => res.status(400).send({ message: 'Переданы некорректные данные id пользователя' }));
 };
 
 const updateUserProfile = (req, res) => {
