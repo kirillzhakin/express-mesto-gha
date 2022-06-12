@@ -5,20 +5,19 @@ const {
   usersController, userController, createUser, updateUserProfile, updateAvatarProfile,
 } = require('../controllers/users');
 
+// GET /users — возвращает всех пользователей
 userRouter.get('/users', usersController);
 
+// GET /users/:userId - возвращает пользователя по _id
 userRouter.get('/users/:userId', userController);
 
+// POST /users — создаёт пользователя
 userRouter.post('/users', createUser);
 
+// PATCH /users/me — обновляет профиль
 userRouter.patch('/users/me', updateUserProfile);
 
+// PATCH /users/me/avatar — обновляет аватар
 userRouter.patch('/users/me/avatar', updateAvatarProfile);
 
 module.exports = userRouter;
-
-// GET /users — возвращает всех пользователей
-// GET /users/:userId - возвращает пользователя по _id
-// POST /users — создаёт пользователя
-// PATCH /users/me — обновляет профиль
-// PATCH /users/me/avatar — обновляет аватар

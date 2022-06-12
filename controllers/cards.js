@@ -23,7 +23,7 @@ const createCard = (req, res) => {
     .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res.status(400).send({ message: 'Некорректные данные' });
+        return res.status(400).send({ message: 'Неверное имя карточки или неверный адресс ссылки' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
     });
