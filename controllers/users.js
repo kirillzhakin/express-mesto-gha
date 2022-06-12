@@ -26,8 +26,8 @@ const userController = (req, res) => {
       res.status(200).send(user);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Неккоректные данные' });
+      if (err.name === 'ValidationError') {
+        return res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
     });
@@ -36,7 +36,7 @@ const userController = (req, res) => {
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
-    .then((user) => res.send(user))
+    .then((user) => res.status(200).send(user))
     .catch((_) => res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' }));
 };
 
@@ -50,8 +50,8 @@ const updateUserProfile = (req, res) => {
       res.status(200).send(user);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Неккоректные данные' });
+      if (err.name === 'ValidationError') {
+        return res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
     });
@@ -67,7 +67,7 @@ const updateAvatarProfile = (req, res) => {
       res.status(200).send(user);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
