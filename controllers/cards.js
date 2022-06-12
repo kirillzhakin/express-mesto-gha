@@ -9,7 +9,7 @@ const cardsController = (_req, res) => {
   Card.find()
     .then((data) => res.send(data))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'CastError') {
         return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
@@ -53,7 +53,7 @@ const likeCard = (req, res) => {
     { new: true },
   ).then((like) => {
     if (!like) {
-      return res.status(404).send({ message: 'Пользователь не найден' });
+      return res.status(404).send({ message: 'Карточка не найдена' });
     }
     return res.send(like);
   })
@@ -72,12 +72,12 @@ const dislikeCard = (req, res) => {
     { new: true },
   ).then((like) => {
     if (!like) {
-      return res.status(404).send({ message: 'Пользователь не найден' });
+      return res.status(404).send({ message: 'Карточка не найдена' });
     }
     return res.send(like);
   })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'CastError') {
         return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
