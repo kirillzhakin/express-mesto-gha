@@ -34,7 +34,7 @@ const createUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res.status(400).send(err.message);
+        return res.status(400).send({ message: err.message });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
     });
@@ -71,7 +71,7 @@ const updateAvatarProfile = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res.status(400).send(err.message);
+        return res.status(400).send({ message: err.message });
       }
       if (err.name === 'CastError') {
         return res.status(400).send({ message: 'Некорректные данные' });
