@@ -7,12 +7,7 @@ const User = require('../models/user');
 
 const usersController = (_req, res) => {
   User.find()
-    .then((data) => {
-      if (!data) {
-        throw new Error();
-      }
-      res.send(data);
-    })
+    .then((data) => res.send(data))
     .catch((_) => res.status(500).send({ message: 'Произошла ошибка' }));
 };
 
@@ -39,7 +34,7 @@ const createUser = (req, res) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' });
+        return res.status(400).send(err.message);
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
     });
@@ -55,8 +50,11 @@ const updateUserProfile = (req, res) => {
       res.status(200).send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' });
+      if (err.name === 'ValidationError') {
+        return res.status(400).send(err.message);
+      }
+      if (err.name === 'CastError') {
+        return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
     });
@@ -72,8 +70,11 @@ const updateAvatarProfile = (req, res) => {
       res.status(200).send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные при создании пользователя' });
+      if (err.name === 'ValidationError') {
+        return res.status(400).send(err.message);
+      }
+      if (err.name === 'CastError') {
+        return res.status(400).send({ message: 'Некорректные данные' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
     });

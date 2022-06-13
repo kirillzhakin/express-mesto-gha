@@ -18,7 +18,7 @@ mongoose.connect('mongodb://0.0.0.0:27017/mestodb')
 
 app.use((req, _res, next) => {
   req.user = {
-    _id: '62a4cc05d6a5293165ac26cf', // _id созданного пользователя
+    _id: '62a6c7b03a2c9ad6eacf306d', // _id созданного пользователя
   };
 
   next();
