@@ -51,7 +51,7 @@ const updateUserProfile = (req, res) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        return res.status(400).send(err.message);
+        return res.status(400).send({ message: err.message });
       }
       if (err.name === 'CastError') {
         return res.status(400).send({ message: 'Некорректные данные' });
