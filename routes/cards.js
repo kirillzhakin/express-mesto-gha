@@ -21,21 +21,21 @@ cardRouter.post('/', celebrate({
 // DELETE /cards/:cardId — удаляет карточку по идентификатору
 cardRouter.delete('/:cardId', celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
+    cardId: Joi.string().length(24).hex().required(),
   }),
 }), deleteCard);
 
 // PUT /cards/:cardId/likes — поставить лайк карточке
 cardRouter.put('/:cardId/likes', celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
+    cardId: Joi.string().length(24).hex().required(),
   }),
 }), likeCard);
 
 // DELETE /cards/:cardId/likes — убрать лайк с карточки
 cardRouter.delete('/:cardId/likes', celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
+    cardId: Joi.string().length(24).hex().required(),
   }),
 }), dislikeCard);
 
