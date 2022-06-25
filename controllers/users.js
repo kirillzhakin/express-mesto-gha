@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
+const ValidationError = require('../errors/ValidationError');
 const CastError = require('../errors/CastError');
 
 const JWT_TOKEN = 'super-strong-secret';
@@ -75,6 +76,9 @@ const createUser = (req, res, next) => {
     .catch((err) => {
       if (err.code === 11000) {
         next(new ConflictError('Пользователь уже существует'));
+      }
+      if (err.name === 'ValidationError') {
+        next(new ValidationError(err.message));
       } else {
         next(err);
       }
