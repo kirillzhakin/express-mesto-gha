@@ -121,7 +121,6 @@ const updateAvatarProfile = (req, res, next) => {
 
 // GET /users/me - возвращает информацию о текущем пользователе
 const getMe = (req, res, next) => {
-  console.log(req.user);
   const { _id } = req.user;
   User.find({ _id })
     .then((user) => {

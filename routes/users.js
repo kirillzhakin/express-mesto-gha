@@ -10,15 +10,15 @@ const {
 // GET /users — возвращает всех пользователей
 userRouter.get('/', usersController);
 
+// GET /users/me - возвращает информацию о текущем пользователе
+userRouter.get('/me', getMe);
+
 // GET /users/:userId - возвращает пользователя по _id
 userRouter.get('/:userId', celebrate({
   params: Joi.object().keys({
     userId: Joi.string().alphanum().length(24),
   }),
 }), userController);
-
-// GET /users/me - возвращает информацию о текущем пользователе
-userRouter.get('/me', getMe);
 
 // PATCH /users/me — обновляет профиль
 userRouter.patch('/me', celebrate({
