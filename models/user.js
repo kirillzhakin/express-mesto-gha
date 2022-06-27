@@ -47,11 +47,10 @@ const userSchema = new mongoose.Schema({
     minlength: [4, 'Длина пароля меньше 4-х символов'],
     select: false,
   },
-
-});
+}, { versionKey: false });
 
 userSchema.statics.findUserByCredentials = function (email, password) {
-  return this.findOne({ email }).select('+password')
+  return this.findOne({ email }, { runValidators: true }).select('+password')
     .then((user) => {
       if (!user) {
         return Promise.reject(new ReqAuthError('Неправильные почта или пароль'));
