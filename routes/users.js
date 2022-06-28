@@ -16,7 +16,7 @@ userRouter.get('/me', getMe);
 // GET /users/:userId - возвращает пользователя по _id
 userRouter.get('/:userId', celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
+    userId: Joi.string().length(24).hex().required(),
   }),
 }), userController);
 

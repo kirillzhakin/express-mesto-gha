@@ -13,8 +13,8 @@ cardRouter.get('/', cardsController);
 // POST /cards — создаёт карточку
 cardRouter.post('/', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    link: Joi.string().pattern(reg).required(),
+    name: Joi.string().required().min(2).max(30),
+    link: Joi.string().required().pattern(reg),
   }),
 }), createCard);
 

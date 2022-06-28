@@ -41,8 +41,8 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: [true, 'Вы не указали почтовый адрес'],
     validate: {
-      validator(link) {
-        return validator.isEmail(link);
+      validator(email) {
+        return validator.isEmail(email);
       },
       message: 'Неправильный формат почты',
     },
