@@ -1,13 +1,8 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable func-names */
-/* eslint-disable no-undef */
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const validator = require('validator');
+const { regUrl, regEmail } = require('../utils/reg');
 
-// const isEmail = require('validator/lib/isEmail');
-// const isUrl = require('validator/lib/isUrl');
 const ReqAuthError = require('../errors/ReqAuthError');
 
 const userSchema = new mongoose.Schema({
@@ -29,8 +24,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
     validate: {
-      validator(link) {
-        return validator.isURL(link);
+      validator(v) {
+        return regUrl.test(v);
       },
       message: 'Некорректный адрес ссылки',
     },
@@ -41,8 +36,8 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: [true, 'Вы не указали почтовый адрес'],
     validate: {
-      validator(email) {
-        return validator.isEmail(email);
+      validator(v) {
+        return regEmail.test(v);
       },
       message: 'Неправильный формат почты',
     },
@@ -56,8 +51,8 @@ const userSchema = new mongoose.Schema({
   },
 }, { versionKey: false });
 
-userSchema.statics.findUserByCredentials = function (email, password) {
-  return this.findOne({ email }, { runValidators: true }).select('+password')
+userSchema.statics.findUserByCredentials = function userFunction(email, password) {
+  return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
         return Promise.reject(new ReqAuthError('Неправильные почта или пароль'));

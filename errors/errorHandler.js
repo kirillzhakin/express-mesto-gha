@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 function errorHandler(err, _req, res, next) {
   const { statusCode = 500, message } = err;
 

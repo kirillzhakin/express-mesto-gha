@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 const userRouter = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
-const { reg } = require('../utils/reg');
+const { regUrl } = require('../utils/reg');
 
 const {
   usersController, userController, updateUserProfile, updateAvatarProfile, getMe,
@@ -31,7 +30,7 @@ userRouter.patch('/me', celebrate({
 // PATCH /users/me/avatar — обновляет аватар
 userRouter.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().pattern(reg).required(),
+    avatar: Joi.string().pattern(regUrl).required(),
   }),
 }), updateAvatarProfile);
 

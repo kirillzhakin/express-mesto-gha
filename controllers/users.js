@@ -1,10 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable max-len */
-/* eslint-disable object-curly-newline */
-/* eslint-disable consistent-return */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars *///
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -60,9 +53,13 @@ const userController = (req, res, next) => {
 
 // POST /signup - создает пользователя
 const createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
   bcrypt.hash(password, 10)
-    .then((hash) => User.create({ name, about, avatar, email, password: hash }))
+    .then((hash) => User.create({
+      name, about, avatar, email, password: hash,
+    }))
     .then((user) => {
       const { _id } = user;
       res.send({
@@ -87,8 +84,12 @@ const createUser = (req, res, next) => {
 
 // PATCH /users/me — обновляет профиль
 const updateUserProfile = (req, res, next) => {
-  const { name, about, email, password } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about, email, password }, { new: true, runValidators: true })
+  const {
+    name, about, email, password,
+  } = req.body;
+  User.findByIdAndUpdate(req.user._id, {
+    name, about, email, password,
+  }, { new: true, runValidators: true })
     .then((user) => {
       if (!user) {
         throw new NotFoundError({ message: 'Запрашиваемый пользователь не найден' });

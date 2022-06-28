@@ -7,7 +7,6 @@ const handleAuthError = (next) => {
   next(new ReqAuthError('Необходима авторизация'));
 };
 
-// eslint-disable-next-line consistent-return
 const authorization = (req, _res, next) => {
   const token = req.cookies.jwt;
   if (!token) {
@@ -21,7 +20,7 @@ const authorization = (req, _res, next) => {
     return handleAuthError(next);
   }
   req.user = payload;
-  next();
+  return next();
 };
 
 module.exports = authorization;

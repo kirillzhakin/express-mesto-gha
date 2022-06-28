@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 const cardRouter = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
-const { reg } = require('../utils/reg');
+const { regUrl } = require('../utils/reg');
 
 const {
   cardsController, createCard, deleteCard, likeCard, dislikeCard,
@@ -14,7 +13,7 @@ cardRouter.get('/', cardsController);
 cardRouter.post('/', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().pattern(reg),
+    link: Joi.string().required().pattern(regUrl),
   }),
 }), createCard);
 

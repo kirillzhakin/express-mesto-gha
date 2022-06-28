@@ -1,8 +1,5 @@
-/* eslint-disable import/no-unresolved */
 const mongoose = require('mongoose');
-// const isUrl = require('validator/lib/isUrl');
-
-const validator = require('validator');
+const { regUrl } = require('../utils/reg');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -15,8 +12,8 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Вы не указали адрес ссылки карточки'],
     validate: {
-      validator(link) {
-        return validator.isURL(link);
+      validator(v) {
+        return regUrl.test(v);
       },
       message: 'Некорректный адрес ссылки',
     },

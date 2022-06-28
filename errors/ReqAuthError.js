@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 class ReqAuthError extends Error {
   constructor(message) {
     super(message);
