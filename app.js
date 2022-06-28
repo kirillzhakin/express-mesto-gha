@@ -8,7 +8,7 @@ const { errors } = require('celebrate');
 
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
-const { login, createUser } = require('./controllers/users');
+const authRouter = require('./routes/auth');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/NotFoundError');
 const errorHandler = require('./errors/errorHandler');
@@ -24,9 +24,7 @@ mongoose.connect('mongodb://0.0.0.0:27017/mestodb')
     console.log('Подключен к базе данных');
   });
 
-app.post('/signin', login);
-app.post('/signup', createUser);
-
+app.use('/', authRouter);
 app.use(auth);
 
 app.use('/users', userRouter);
